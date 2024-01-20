@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5879502736779295784}
-  - component: {fileID: 364523363311788310}
+  - component: {fileID: 8146658472023329178}
   - component: {fileID: 6776568132711782597}
   - component: {fileID: 7428247783194948325}
+  - component: {fileID: 4727429337670597309}
   m_Layer: 0
   m_Name: cirle
   m_TagString: Untagged
@@ -26,15 +27,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6623083246520450648}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.24, y: 1.54, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.2018}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &364523363311788310
+--- !u!212 &8146658472023329178
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d91f09a75a2ebae4d929e3ea5971b2a6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 616d6c895670b384fb427bae8f151ad3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -147,4 +148,20 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 6.155
+  m_Radius: 5
+--- !u!114 &4727429337670597309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6623083246520450648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f6a0f6a2b084d942b26b5a0d7053f77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnedId: 0
+  GemType: 0
+  newSprite: {fileID: 21300000, guid: 616d6c895670b384fb427bae8f151ad3, type: 3}
+  spriteRenderer: {fileID: 8146658472023329178}

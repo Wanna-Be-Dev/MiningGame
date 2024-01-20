@@ -7,7 +7,8 @@ public class Cart : MonoBehaviour
     // every frameS
     Touch touch;
     public GameObject prefab;
-   
+
+    int count = 0;
     void Update()
     {
         // if left-mouse-button is being held OR there is at least one touch
@@ -29,14 +30,13 @@ public class Cart : MonoBehaviour
             newPos.x = Mathf.Clamp(worldPos.x,-2,2);
             // apply new position
             transform.position = newPos;
-         
-
-
 
         } 
         else if(Input.GetMouseButtonUp(0) || (touch.phase == TouchPhase.Ended))
         {
-            Instantiate(prefab, transform.position, transform.rotation);
+            GameObject go = Instantiate(prefab, transform.position, transform.rotation);
+            go.GetComponent<Ores>().SetID(count);
+            count++;
         }
     }
 
