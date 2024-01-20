@@ -56,10 +56,7 @@ public class Ores : MonoBehaviour
     {
         GemType++;
         spriteRenderer.sprite = newSprite[GemType];
-        //gameObject.transform.localScale = size[GemType];
-
-
-
+        gameObject.transform.localScale = new Vector3((float)size[GemType], (float)size[GemType], (float)size[GemType]);
     }
     public int GetGemType()
     {
