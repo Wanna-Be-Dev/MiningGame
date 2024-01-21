@@ -9,6 +9,11 @@ public class Cart : MonoBehaviour
     public GameObject prefab;
 
     int count = 0;
+
+    bool Cooldown = false;
+
+    [SerializeField]
+    public int CooldownTimer = 1;
     void Update()
     {
         // if left-mouse-button is being held OR there is at least one touch
@@ -32,12 +37,24 @@ public class Cart : MonoBehaviour
             transform.position = newPos;
 
         } 
-        else if(Input.GetMouseButtonUp(0) || (touch.phase == TouchPhase.Ended))
+        else if((Input.GetMouseButtonUp(0) || (touch.phase == TouchPhase.Ended))&& !Cooldown)
         {
             GameObject go = Instantiate(prefab, transform.position, transform.rotation);
             go.GetComponent<Ores>().SetID(count);
             count++;
+            Cooldown = true;
+            StartCoroutine(Countdown());
         }
     }
 
+    IEnumerator Countdown()
+    {
+        int counter = CooldownTimer;
+        while (counter > 0)
+        {
+            yield return new WaitForSeconds(1);
+            counter--;
+        }
+        Cooldown = false;
+    }
 }
