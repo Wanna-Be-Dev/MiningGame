@@ -1,19 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Cart : MonoBehaviour
 {
-    // every frameS
-    Touch touch;
+    [Header("Next Object")]
+    [SerializeField]
+    public GameObject nextObject;
+    public GameObject nextafterObject;
+
+    public Sprite[] Sprites;
+
+    //for phone
+    bool hasTouched = false;
+
     public GameObject prefab;
 
+    //Gem count
     int count = 0;
-
+    //tapping cooldown
     bool Cooldown = false;
+
+    int [] NextGemType = new int[3];
 
     [SerializeField]
     public int CooldownTimer = 1;
+
+    [Header("Debug")]
+    [SerializeField]
+    private bool disableCoolDown = false;
+
+    public void Start()
+    {
+        NextGemType[0] = 0;
+        NextGemType[1] = 0;
+        NextGemType[2] = 0;
+    }
     void Update()
     {
         // if left-mouse-button is being held OR there is at least one touch
@@ -35,18 +58,61 @@ public class Cart : MonoBehaviour
             newPos.x = Mathf.Clamp(worldPos.x,-2,2);
             // apply new position
             transform.position = newPos;
+            hasTouched = true;
 
         } 
-        else if((Input.GetMouseButtonUp(0) || (touch.phase == TouchPhase.Ended))&& !Cooldown)
+        else if((Input.GetMouseButtonUp(0) || (Input.touchCount == 0 && hasTouched)) && !Cooldown)
         {
+            
             GameObject go = Instantiate(prefab, transform.position, transform.rotation);
             go.GetComponent<Ores>().SetID(count);
+            go.GetComponent<Ores>().SetGemType(RandGemType());
             count++;
-            Cooldown = true;
-            StartCoroutine(Countdown());
+            //for debug unlimited spawn
+            if(!disableCoolDown)
+            {
+                StartCoroutine(Countdown());
+                hasTouched = false;
+            } 
         }
     }
+    void DisplayNextPiece()
+    {
+        nextObject.GetComponent<Image>().sprite = Sprites[NextGemType[1]];
+        nextafterObject.GetComponent<Image>().sprite = Sprites[NextGemType[2]];
+    }
+    private int RandGemType()
+    {
+        switch (count)
+        {
+            case 0:
+                NextType(count);
+                break;
+            case 1:
+                NextType(Random.Range(0, 2));
+                break;
+            case 2:
+                NextType(Random.Range(0, 3));
+                break;
+            case 3:
+                NextType(Random.Range(0, 4));
+                break;
+            default:
+                NextType(Random.Range(0, 6));
+                break;
+        }
+        return NextGemType[0];
+    }
 
+    void NextType(int nextValue)
+    {
+
+        NextGemType[0] = NextGemType[1];
+        NextGemType[1] = NextGemType[2];
+        NextGemType[2] = nextValue;
+        DisplayNextPiece();
+
+    }
     IEnumerator Countdown()
     {
         int counter = CooldownTimer;

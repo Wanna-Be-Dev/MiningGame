@@ -19,38 +19,47 @@ public class Ores : MonoBehaviour
         Sapphire    10   0.33
         Diamond     11   0.34
     */
-    Dictionary<int, double> size = new Dictionary<int, double>()
+    //Radius of each gem
+    Dictionary<int, float> size = new Dictionary<int, float>()
     {
-    { 0, 0.03},
-    { 1, 0.06},
-    { 2, 0.10},
-    { 3, 0.13},
-    { 4, 0.17},
-    { 5, 0.21},
-    { 6, 0.24},
-    { 7, 0.28},
-    { 8, 0.31},
-    { 9, 0.33},
-    { 10, 0.34},
+    { 0, 0.03f},
+    { 1, 0.06f},
+    { 2, 0.09f},
+    { 3, 0.12f},
+    { 4, 0.15f},
+    { 5, 0.18f},
+    { 6, 0.21f},
+    { 7, 0.24f},
+    { 8, 0.27f},
+    { 9, 0.30f},
+    { 10, 0.32f},
     };
 
     public int spawnedId = 0;
     public int GemType = 0;
 
+    public bool isNewGem = true;
+
     public Sprite[] newSprite;
 
     public SpriteRenderer spriteRenderer;
+    private void Start()
+    {
+        StartCoroutine(JustSpawned());
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.GetComponent<Ores>() != null)
         {
             Ores other = collision.gameObject.GetComponent<Ores>();
             if (other.GetGemType() == GemType)
-                if(spawnedId > other.GetId())
+            {
+                if (spawnedId > other.GetId())
                 {
                     Destroy(collision.gameObject);
                     ChangeGemType();
-                }      
+                }
+            }
         }
     }
 
@@ -70,24 +79,47 @@ public class Ores : MonoBehaviour
     void ChangeGemType()
     {
         EventManager.SendScore((GemType + 1) * 2);
-        GemType++;
-        spriteRenderer.sprite = newSprite[GemType];
-        gameObject.transform.localScale = new Vector3((float)size[GemType], (float)size[GemType], (float)size[GemType]);
-        GetComponent<Rigidbody2D>().mass = (float)size[GemType]*100;
-        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-        StartCoroutine(Slowdown());
+        if(GemType<9)
+        { 
+            GemType++;
+            spriteRenderer.sprite = newSprite[GemType];
+            gameObject.transform.localScale = new Vector3(size[GemType], size[GemType], size[GemType]);
+            GetComponent<Rigidbody2D>().mass = (float)size[GemType]*100;
+            GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            StartCoroutine(Slowdown());
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
-    IEnumerator Slowdown()
+    IEnumerator JustSpawned()
     {
-        GetComponent<Rigidbody2D>().drag = 5f;
+       
         int counter = 3;
         while (counter > 0)
         {
-            GetComponent<Rigidbody2D>().drag -= counter;
+            yield return new WaitForSeconds(1);
+            counter--;
+        }
+        isNewGem = false;
+    }
+    IEnumerator Slowdown()
+    {
+        //GetComponent<Rigidbody2D>().drag = 4f;
+        int counter = 3;
+        while (counter > 0)
+        {
+            GetComponent<Rigidbody2D>().angularVelocity = 0;
+            //GetComponent<Rigidbody2D>().drag -= 0.5f;
             yield return new WaitForSeconds(1);
             counter--;
         }
         GetComponent<Rigidbody2D>().drag = 1f;
+    }
+    public bool IsGemNew()
+    {
+        return isNewGem;
     }
     public int GetGemType()
     {
@@ -97,6 +129,18 @@ public class Ores : MonoBehaviour
     {
         return spawnedId;
     }
-    public int SetGemType(int num) => GemType = num;
+    public float GetRad()
+    {
+        return size[GemType];
+    }
     public int SetID(int num) => spawnedId = num;
+    public void SetGemType(int num)
+    {
+        GemType = num;
+        spriteRenderer.sprite = newSprite[GemType];
+        gameObject.transform.localScale = new Vector3(size[GemType], size[GemType], size[GemType]);
+        GetComponent<Rigidbody2D>().mass = (float)size[GemType] * 100;
+    }
+
+
 }
