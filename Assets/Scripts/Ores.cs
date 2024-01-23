@@ -45,7 +45,7 @@ public class Ores : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     private void Start()
     {
-        StartCoroutine(JustSpawned());
+        //
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -61,6 +61,7 @@ public class Ores : MonoBehaviour
                 }
             }
         }
+        StartCoroutine(JustSpawned());
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -93,10 +94,14 @@ public class Ores : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    /// <summary>
+    /// To Delay the finnish line trigger
+    /// </summary>
+    /// <returns>changes a bool state</returns>
     IEnumerator JustSpawned()
     {
-       
-        int counter = 3;
+
+        int counter = 1;
         while (counter > 0)
         {
             yield return new WaitForSeconds(1);
@@ -107,10 +112,10 @@ public class Ores : MonoBehaviour
     IEnumerator Slowdown()
     {
         //GetComponent<Rigidbody2D>().drag = 4f;
-        int counter = 3;
+        int counter = 2;
         while (counter > 0)
         {
-            GetComponent<Rigidbody2D>().angularVelocity = 0;
+            GetComponent<Rigidbody2D>().angularVelocity -= 1;
             //GetComponent<Rigidbody2D>().drag -= 0.5f;
             yield return new WaitForSeconds(1);
             counter--;

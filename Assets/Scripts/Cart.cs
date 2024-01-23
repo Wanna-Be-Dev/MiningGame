@@ -69,11 +69,11 @@ public class Cart : MonoBehaviour
             go.GetComponent<Ores>().SetGemType(RandGemType());
             count++;
             //for debug unlimited spawn
-            if(!disableCoolDown)
-            {
-                StartCoroutine(Countdown());
-                hasTouched = false;
-            } 
+         
+            StartCoroutine(Countdown());
+            Cooldown = true;
+            hasTouched = false;
+            
         }
     }
     void DisplayNextPiece()
