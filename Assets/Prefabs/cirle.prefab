@@ -163,16 +163,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnedId: 0
   GemType: 0
+  isNewGem: 1
   newSprite:
-  - {fileID: 21300000, guid: 616d6c895670b384fb427bae8f151ad3, type: 3}
-  - {fileID: 21300000, guid: 0e34bf7e66dacf940aa6aa36abccdeee, type: 3}
-  - {fileID: 21300000, guid: 200647d1974d76b4b9f70cea85f9e303, type: 3}
-  - {fileID: 21300000, guid: cb680a3f8b0404d4294597a221c430df, type: 3}
-  - {fileID: 21300000, guid: 4b7b952d30e4ae5499fdf282de436b32, type: 3}
-  - {fileID: 21300000, guid: 4094a1a1a3ccb1548ab28aa9fb5ce4fc, type: 3}
-  - {fileID: 21300000, guid: b73fc5db1e270084ab8e5fb243c51cd0, type: 3}
-  - {fileID: 21300000, guid: e5b346a4f3580c04fa9b239d3ebb8eba, type: 3}
-  - {fileID: 21300000, guid: f7fd3935d5f69274eba29055365d00ba, type: 3}
-  - {fileID: 21300000, guid: 862d3fc05efd54040b74772314cd8a2e, type: 3}
-  - {fileID: 21300000, guid: cdac1692935fc434a943613fdbdab634, type: 3}
+  - {fileID: 21300000, guid: 2783cf1ea2713e147b9c592a9c983b98, type: 3}
+  - {fileID: 21300000, guid: dc2b1121dc52fe144ad814cfe66dfe0f, type: 3}
+  - {fileID: 21300000, guid: d8a180017139a9b4c9071a7188a085c1, type: 3}
+  - {fileID: 21300000, guid: 6798137153ec5c74c8c08f8b38fb479f, type: 3}
+  - {fileID: 21300000, guid: c70473b56c72a9d48a0ab020eb8c5c80, type: 3}
+  - {fileID: 21300000, guid: 7708b2c80f6fd764db1bb7ec9c7bf146, type: 3}
+  - {fileID: 21300000, guid: 88791c0481de61c4f92d88dbd6ce18e2, type: 3}
+  - {fileID: 21300000, guid: 325806a642e25a64899104847f856fc9, type: 3}
+  - {fileID: 21300000, guid: ce898f690eb2a0c4b940b514e273f5f2, type: 3}
+  - {fileID: 21300000, guid: 1bc409841733bd34693411d0bd669226, type: 3}
   spriteRenderer: {fileID: 8146658472023329178}

@@ -32,7 +32,6 @@ public class Ores : MonoBehaviour
     { 7, 0.24f},
     { 8, 0.27f},
     { 9, 0.30f},
-    { 10, 0.32f},
     };
 
     public int spawnedId = 0;
@@ -62,6 +61,7 @@ public class Ores : MonoBehaviour
             }
         }
         StartCoroutine(JustSpawned());
+        EventManager.HasTouched();
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -80,7 +80,7 @@ public class Ores : MonoBehaviour
     void ChangeGemType()
     {
         EventManager.SendScore((GemType + 1) * 2);
-        if(GemType<9)
+        if(GemType<8)
         { 
             GemType++;
             spriteRenderer.sprite = newSprite[GemType];

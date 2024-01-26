@@ -5,9 +5,25 @@ using UnityEngine.UI;
 
 public class Cart : MonoBehaviour
 {
+    Dictionary<int, float> size = new Dictionary<int, float>()
+    {
+    { 0, 0.03f},
+    { 1, 0.06f},
+    { 2, 0.09f},
+    { 3, 0.12f},
+    { 4, 0.15f},
+    { 5, 0.18f},
+    { 6, 0.21f},
+    { 7, 0.24f},
+    { 8, 0.27f},
+    { 9, 0.30f},
+    { 10, 0.32f},
+    };
+
     [Header("Next Object")]
     [SerializeField]
     public GameObject nextObject;
+    [SerializeField]
     public GameObject nextafterObject;
 
     public Sprite[] Sprites;
@@ -27,15 +43,19 @@ public class Cart : MonoBehaviour
     [SerializeField]
     public int CooldownTimer = 1;
 
-    [Header("Debug")]
+    [Header("Left Right Stopper")]
     [SerializeField]
-    private bool disableCoolDown = false;
+    private float RightStop = 2; //2.85
+    [SerializeField]
+    private float LeftStop = -2;//-2.65
 
     public void Start()
     {
         NextGemType[0] = 0;
         NextGemType[1] = 0;
         NextGemType[2] = 0;
+        DisplayNextPiece();
+        EventManager.ObjectHasTouched += DisplayNextPiece;
     }
     void Update()
     {
@@ -51,34 +71,33 @@ public class Cart : MonoBehaviour
             screenPos.z = 10.0f;
             // convert mouse position to world space
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
-
             // get current position of this GameObject
             Vector3 newPos = transform.position;
             // set x position to mouse world-space x position
-            newPos.x = Mathf.Clamp(worldPos.x,-2,2);
+            newPos.x = Mathf.Clamp(worldPos.x, LeftStop, RightStop);
             // apply new position
             transform.position = newPos;
             hasTouched = true;
-
         } 
         else if((Input.GetMouseButtonUp(0) || (Input.touchCount == 0 && hasTouched)) && !Cooldown)
         {
-            
             GameObject go = Instantiate(prefab, transform.position, transform.rotation);
             go.GetComponent<Ores>().SetID(count);
             go.GetComponent<Ores>().SetGemType(RandGemType());
             count++;
+
+            nextObject.GetComponent<SpriteRenderer>().sprite = null;
             //for debug unlimited spawn
-         
             StartCoroutine(Countdown());
             Cooldown = true;
             hasTouched = false;
-            
+            SetOffsets();
         }
     }
     void DisplayNextPiece()
     {
-        nextObject.GetComponent<Image>().sprite = Sprites[NextGemType[1]];
+        nextObject.GetComponent<SpriteRenderer>().sprite = Sprites[NextGemType[1]];
+        nextObject.transform.localScale = new Vector3(size[NextGemType[1]], size[NextGemType[1]], size[NextGemType[1]]);
         nextafterObject.GetComponent<Image>().sprite = Sprites[NextGemType[2]];
     }
     private int RandGemType()
@@ -103,6 +122,12 @@ public class Cart : MonoBehaviour
         }
         return NextGemType[0];
     }
+    void SetOffsets()
+    {
+        float radius = 5 * (size[NextGemType[1]]);
+        RightStop = 2.6f - radius;
+        LeftStop = -2.4f + radius;
+    }
 
     void NextType(int nextValue)
     {
@@ -110,8 +135,8 @@ public class Cart : MonoBehaviour
         NextGemType[0] = NextGemType[1];
         NextGemType[1] = NextGemType[2];
         NextGemType[2] = nextValue;
-        DisplayNextPiece();
-
+        //StartCoroutine(DisplayNextPiece());
+        //DisplayNextPiece();
     }
     IEnumerator Countdown()
     {

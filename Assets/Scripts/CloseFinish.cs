@@ -5,9 +5,6 @@ using UnityEngine.Events;
 
 public class CloseFinish : MonoBehaviour
 {
-    //float distance = -1f;
-    [SerializeField]
-    float EndLine = 2.5f;
 
     [SerializeField]
     private GameObject RayCastOrigin;
@@ -34,7 +31,6 @@ public class CloseFinish : MonoBehaviour
             EventManager.CloseFinish(-1);
         }
     }
-
     private void Update()
     {
         CheckRayCast();
